@@ -61,7 +61,7 @@ class TransactionHistory extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
                       child:CircleAvatar(
-                        radius: 100.0,
+                        radius: 200.0,
                         child: Icon(Icons.attach_money,size: 30,),
                       ),
                     ),
