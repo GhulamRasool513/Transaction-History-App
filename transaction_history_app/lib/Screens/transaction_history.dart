@@ -4,6 +4,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class TransactionHistory extends StatelessWidget {
   const TransactionHistory({super.key});
 
+
+  final text = '2023-04-15T05:57:47.157Z"';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +17,6 @@ class TransactionHistory extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             //Search Bar.
             Padding(
@@ -39,33 +40,79 @@ class TransactionHistory extends StatelessWidget {
                     filled: true),
               ),
             ),
+            //Upper White Container Body
             Expanded(
-              //Upper Main White Container
-
-            child: Container(
+              child: Container(
                 height: double.infinity,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(40.0),
-                        topLeft: Radius.circular(40.0)
-                    )
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Color(0xffFAC5C5),
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        topRight: Radius.circular(40.0),
+                        topLeft: Radius.circular(40.0))),
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      top: 25.0, left: 20, right: 15),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          //Transparent Red Container
+                          Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFFBD5D5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15)),
+                            ),
+                            //Dollar Sign Container
+                            child: Center(
+                              child: Container(
+                                  height: 35,
+                                  width: 35,
+                                  decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(30.0))),
+                                  child: Icon(
+                                    Icons.attach_money,
+                                    size: 25,
+                                    color: Colors.white70,
+                                  )),
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Payment',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Container(
+                                width: 100,
+                                color: Colors.white,
+                                child: Text(
+                                  text.length > 10 ? '${text.substring(0, 10)}' : text,
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                    color: Colors.black38,
+                                  ),
+                                ),
+                              ),
+
+                            ],
+                          ),
+                          
+                        ],
                       ),
-                      child:CircleAvatar(
-                        radius: 200.0,
-                        child: Icon(Icons.attach_money,size: 30,),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
