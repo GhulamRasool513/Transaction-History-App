@@ -2,8 +2,21 @@ import 'package:flutter/material.dart';
 import 'transaction_history.dart';
 
 class TransactionDetails extends StatefulWidget {
-  const TransactionDetails({Key? key}) : super(key: key);
+  String? type;
+  String? amount;
+  String? date;
+  String? currency;
+  String? description;
+  String? id;
 
+  TransactionDetails({
+    required this.type,
+    required this.amount,
+    required this.date,
+    required this.currency,
+    required this.description,
+    this.id
+  });
   @override
   State<TransactionDetails> createState() => _TransactionDetailsState();
 }
@@ -21,12 +34,11 @@ class _TransactionDetailsState extends State<TransactionDetails> {
       body: SafeArea(
         child: Column(
           children: [
-            //Upper White Container Body,
             Container(
               height: 150,
               width: 500,
               decoration: BoxDecoration(
-                color: Color(0xFFBFE9C8),
+                color: widget.type == 'payment' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
                 borderRadius: BorderRadius.all(Radius.circular(40)),
               ),
               //Dollar Sign Container
@@ -35,7 +47,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                     height: 55,
                     width: 55,
                     decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: widget.type == 'payment' ? Colors.red : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(30.0))),
                     child: Icon(
                       Icons.attach_money,
@@ -57,67 +69,92 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                         topRight: Radius.circular(40.0),
                         topLeft: Radius.circular(40.0))),
                 child: Padding(
-                    padding: const EdgeInsets.only(
-                        top: 25.0, left: 20, right: 25, bottom: 25),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Center(
-                          child: Text(
-                            'Deposit Details',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                              fontSize: 25.0,
-                            ),
-                          ),
-                        ),
-                        Divider(thickness: 1,),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Amount: ',style: TextStyle(fontSize: 20,),),
-                            Text('+\$2889: ',style: TextStyle(fontSize: 18,color: Colors.green),),
-                          ],
-                        ),
-                        Divider(thickness: 1,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Amount: ',style: TextStyle(fontSize: 20,),),
-                            Text('05/05/2023',style: TextStyle(fontSize: 18,)),
-                          ],
-                        ),
-                        Divider(thickness: 1,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Currency: ',style: TextStyle(fontSize: 20,),),
-                            Text('BDT',style: TextStyle(fontSize: 18,)),
-                          ],
-                        ),
-                        Divider(thickness: 1,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Description: ',style: TextStyle(fontSize: 20,),),
-                            Text('invoice transaction at Block, Skiles and Herman using card ending with ***(...4033) for HTG 161.74 in account ***20234535: ',style: TextStyle(fontSize: 15,),),
-                            Divider(thickness: 1,),
-
-
-                          ],
-                        ),
-
-                      ],
-                    ),),
+                  padding: const EdgeInsets.only(
+                      top: 25.0, left: 20, right: 25, bottom: 25),
+                  child: Details(type: widget.type, amount: widget.amount, date: widget.date, currency: widget.currency, description: widget.description)
+                ),
               ),
             )
           ],
         ),
       ),
+    );
+  }
+}
+
+class Details extends StatelessWidget {
+  String? type;
+  String? amount;
+  String? date;
+  String? currency;
+  String? description;
+  String? id;
+
+  Details({
+    required this.type,
+    required this.amount,
+    required this.date,
+    required this.currency,
+    required this.description,
+    this.id
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Center(
+          child: Text(
+            '$type details',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 25.0,
+            ),
+          ),
+        ),
+        Divider(thickness: 1,),
+        SizedBox(
+          height: 20,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Amount: ', style: TextStyle(fontSize: 20,),),
+            Text(type == 'payment'? '-\$$amount': '+\$$amount',
+              style: TextStyle(fontSize: 18, color: type == 'payment'?  Colors.red:Colors.green),),
+          ],
+        ),
+        Divider(thickness: 1,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Date', style: TextStyle(fontSize: 20,),),
+            Text(date!.length > 10 ? date!.substring(0, 10) : date!, style: TextStyle(fontSize: 18,)),
+          ],
+        ),
+        Divider(thickness: 1,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text('Currency: ', style: TextStyle(fontSize: 20,),),
+            Text('$currency', style: TextStyle(fontSize: 18,)),
+          ],
+        ),
+        Divider(thickness: 1,),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Description: ', style: TextStyle(fontSize: 20,),),
+            Text(
+              '$description',
+              style: TextStyle(fontSize: 15,),),
+            Divider(thickness: 1,),
+          ],
+        ),
+
+      ],
     );
   }
 }

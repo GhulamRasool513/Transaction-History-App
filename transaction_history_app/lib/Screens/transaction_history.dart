@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:transaction_history_app/Screens/transaction_details.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 
 class TransactionHistory extends StatefulWidget {
   const TransactionHistory({super.key});
@@ -10,7 +13,7 @@ class TransactionHistory extends StatefulWidget {
 }
 
 class _TransactionHistoryState extends State<TransactionHistory> {
-  List<MyCard> cardList = [];
+  static List<MyCard> cardList = [];
 
   void getData() async {
     String url =
@@ -20,18 +23,25 @@ class _TransactionHistoryState extends State<TransactionHistory> {
     print(apiData.length);
 
     for (var data in apiData) {
-      String date = await data['date'];
-      String amount = await data['amount'];
-      String type = await data['type'];
+      String date =  data['date'];
+      String amount =  data['amount'];
+      String type = data['type'];
+      String currency = data['currency'];
+      String description = data['description'];
+      String id = data['id'];
 
       cardList.add(MyCard(
         date: date,
         amount: amount,
         type: type,
-        currency: 'currency',
-        description: 'des',
-        id: 'id',
-        onTap: (){},
+        currency: currency,
+        description: description,
+        id: id,
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return TransactionDetails(type: type, amount: amount, date: date, currency: currency, description: description);
+          }));
+        },
       ));
     }
     setState(() {
@@ -99,7 +109,11 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                         top: 25.0, left: 20, right: 25, bottom: 25),
                     child: cardList.isNotEmpty
                         ? ListView(children: cardList)
-                        : Text('data Is Loading')),
+                        : SpinKitCircle(
+                      duration: Duration(seconds: 2),
+                      size: 70.0,
+                      color: Color(0xFF0ED679),
+                    ),),
               ),
             ),
           ],
@@ -154,7 +168,8 @@ class MyCard extends StatelessWidget {
                       width: 35,
                       decoration: BoxDecoration(
                           color: type == 'payment' ? Colors.red : Colors.green,
-                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(30.0))),
                       child: Icon(
                         Icons.attach_money,
                         size: 25,
@@ -189,19 +204,28 @@ class MyCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    type == 'payment' ? '-\$$amount': '+\$$amount',
+                    type == 'payment' ? '-\$$amount' : '+\$$amount',
                     style: TextStyle(
                       fontSize: 15.0,
-                      color:
-                          type == 'payment' ? Colors.red.shade500 : Colors.green,
+                      color: type == 'payment'
+                          ? Colors.red.shade500
+                          : Colors.green,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Icon(
-                    type == 'payment'
-                        ? Icons.arrow_circle_up
-                        : Icons.arrow_circle_down,
-                    color: type == 'payment' ? Colors.red : Colors.green,
+                  Row(
+                    children: [
+                      Text('id-$id',style: TextStyle( color: Colors.black38,),),
+                      SizedBox(
+                        width: 7,
+                      ),
+                      Icon(
+                        type == 'payment'
+                            ? Icons.arrow_circle_up
+                            : Icons.arrow_circle_down,
+                        color: type == 'payment' ? Colors.red : Colors.green,
+                      ),
+                    ],
                   )
                 ],
               ),

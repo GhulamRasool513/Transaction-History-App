@@ -56,6 +56,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "flutter_spinkit",
+      "rootUri": "file:///Users/sameer/.pub-cache/hosted/pub.dev/flutter_spinkit-5.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_test",
       "rootUri": "file:///Users/sameer/Developer/flutter/packages/flutter_test",
       "packageUri": "lib/",
@@ -176,7 +182,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2023-05-22T23:54:01.356713Z",
+  "generated": "2023-05-23T23:16:36.571072Z",
   "generator": "pub",
   "generatorVersion": "3.0.1"
 }
