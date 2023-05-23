@@ -1,10 +1,70 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
-class TransactionHistory extends StatelessWidget {
+
+
+class TransactionHistory extends StatefulWidget {
   const TransactionHistory({super.key});
 
-  final text = '2023-04-15T05:57:47.157Z"';
+  @override
+  State<TransactionHistory> createState() => _TransactionHistoryState();
+}
+
+class _TransactionHistoryState extends State<TransactionHistory> {
+
+
+  List<MyCard> cardList = [
+  ];
+
+
+  void getData() async {
+    String url =
+        'https://64677d7f2ea3cae8dc3091e7.mockapi.io/api/v1/transactions';
+    http.Response response = await http.get(Uri.parse(url));
+    var apiData = jsonDecode(response.body);
+    print(apiData.length);
+
+    for (var data in apiData) {
+      String date = await data['date'];
+      String amount = await data['amount'];
+      String type = await data['type'];
+
+      cardList.add(MyCard(date: date, amount: amount, type: type,
+        currency: 'currency',description: 'des',id: 'id',));
+    }
+    setState(() {
+      print('object');
+    });
+  }
+
+  // List<ApiJson> _notes = List<ApiJson>();
+  //
+  //  Future<List<ApiJson>> getApiData() async {
+  //
+  //    List<ApiJson> apiListData = [];
+  //
+  //    String url = 'https://64677d7f2ea3cae8dc3091e7.mockapi.io/api/v1/transactions';
+  //    http.Response response = await http.get(Uri.parse(url));
+  //
+  //    var notes = List<ApiJson>();
+  //
+  //    if(response.statusCode == 200){
+  //      var apiData = response.body;
+  //      var localData = jsonDecode(apiData);
+  //      for(var data in localData){
+  //        apiListData.add(ApiJson.fromJson(data));
+  //      }
+  //    }
+  //    return apiListData;
+  //  }
+
+  @override
+  void initState() {
+    print('Init State');
+    getData();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +82,11 @@ class TransactionHistory extends StatelessWidget {
             Padding(
               padding: EdgeInsets.all(20.0),
               child: TextField(
+                onTap: (){
+                  setState(() {
+                    print('tapped');
+                  });
+                },
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(20.0),
                     enabledBorder: OutlineInputBorder(
@@ -51,322 +116,111 @@ class TransactionHistory extends StatelessWidget {
                         topRight: Radius.circular(40.0),
                         topLeft: Radius.circular(40.0))),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 25.0, left: 20, right: 25, bottom: 25),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //Transparent Red Container
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFBD5D5),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            //Dollar Sign Container
-                            child: Center(
-                              child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 25,
-                                    color: Colors.white70,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Payment',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                text.length > 10
-                                    ? '${text.substring(0, 10)}'
-                                    : text,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black38,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '-\$281.28',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.red.shade500,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_circle_up,
-                                color: Colors.red,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //Transparent Red Container
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFD4F0DA),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15)),
-                            ),
-                            //Dollar Sign Container
-                            child: Center(
-                              child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFF29B446),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 25,
-                                    color: Colors.white70,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Deposit',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                text.length > 10
-                                    ? '${text.substring(0, 10)}'
-                                    : text,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black38,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '409.51"',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Color(0xFF29B446),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_circle_down,
-                                color: Colors.green,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //Transparent Red Container
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFFBD5D5),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(15)),
-                            ),
-                            //Dollar Sign Container
-                            child: Center(
-                              child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 25,
-                                    color: Colors.white70,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Payment',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                text.length > 10
-                                    ? '${text.substring(0, 10)}'
-                                    : text,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black38,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '-\$281.28',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.red.shade500,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_circle_up,
-                                color: Colors.red,
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          //Transparent Red Container
-                          Container(
-                            height: 50,
-                            width: 50,
-                            decoration: BoxDecoration(
-                              color: Color(0xFFD4F0DA),
-                              borderRadius:
-                              BorderRadius.all(Radius.circular(15)),
-                            ),
-                            //Dollar Sign Container
-                            child: Center(
-                              child: Container(
-                                  height: 35,
-                                  width: 35,
-                                  decoration: BoxDecoration(
-                                      color: Color(0xFF29B446),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(30.0))),
-                                  child: Icon(
-                                    Icons.attach_money,
-                                    size: 25,
-                                    color: Colors.white70,
-                                  )),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Deposit',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                text.length > 10
-                                    ? '${text.substring(0, 10)}'
-                                    : text,
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Colors.black38,
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            width: 150,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                '409.51"',
-                                style: TextStyle(
-                                  fontSize: 15.0,
-                                  color: Color(0xFF29B446),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_circle_down,
-                                color: Colors.green,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Divider(),
-                    ],
-                  ),
+                    padding: const EdgeInsets.only(
+                        top: 25.0, left: 20, right: 25, bottom: 25),
+                    child: cardList.isNotEmpty ? ListView(children: cardList): Text('data Is Loading')
                 ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+
+final name = '2023-04-15T05:57:47.157Z"';
+
+class MyCard extends StatelessWidget {
+  String? date;
+  String? amount;
+  String? currency;
+  String? type;
+  String? description;
+  String? id;
+
+  MyCard({required this.date,
+    required this.amount,
+    this.currency,
+    required this.type,
+    this.description,
+    this.id});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            //Transparent Red Container
+            Container(
+              height: 50,
+              width: 50,
+              decoration: BoxDecoration(
+                color: type == 'payment' ? Color(0xFFFBD5D5): Color(0xFFBFE9C8),
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              //Dollar Sign Container
+              child: Center(
+                child: Container(
+                    height: 35,
+                    width: 35,
+                    decoration: BoxDecoration(
+                        color: type == 'payment' ? Colors.red: Colors.green,
+                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                    child: Icon(
+                      Icons.attach_money,
+                      size: 25,
+                      color: Colors.white70,
+                    )),
+              ),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$type',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  date!.length > 10 ? date!.substring(0, 10) : date!,
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: Colors.black38,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              width: 110,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '$amount',
+                  style: TextStyle(
+                    fontSize: 15.0,
+                    color: type == 'payment' ? Colors.red.shade500: Colors.green,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Icon(
+                  type == 'payment' ? Icons.arrow_circle_up: Icons.arrow_circle_down,
+                  color: type == 'payment' ? Colors.red: Colors.green,
+                )
+              ],
+            ),
+          ],
+        ),
+        Divider()
+      ],
     );
   }
 }
