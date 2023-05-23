@@ -2,8 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-
 class TransactionHistory extends StatefulWidget {
   const TransactionHistory({super.key});
 
@@ -12,11 +10,7 @@ class TransactionHistory extends StatefulWidget {
 }
 
 class _TransactionHistoryState extends State<TransactionHistory> {
-
-
-  List<MyCard> cardList = [
-  ];
-
+  List<MyCard> cardList = [];
 
   void getData() async {
     String url =
@@ -30,41 +24,26 @@ class _TransactionHistoryState extends State<TransactionHistory> {
       String amount = await data['amount'];
       String type = await data['type'];
 
-      cardList.add(MyCard(date: date, amount: amount, type: type,
-        currency: 'currency',description: 'des',id: 'id',));
+      cardList.add(MyCard(
+        date: date,
+        amount: amount,
+        type: type,
+        currency: 'currency',
+        description: 'des',
+        id: 'id',
+        onTap: (){},
+      ));
     }
     setState(() {
       print('object');
     });
   }
 
-  // List<ApiJson> _notes = List<ApiJson>();
-  //
-  //  Future<List<ApiJson>> getApiData() async {
-  //
-  //    List<ApiJson> apiListData = [];
-  //
-  //    String url = 'https://64677d7f2ea3cae8dc3091e7.mockapi.io/api/v1/transactions';
-  //    http.Response response = await http.get(Uri.parse(url));
-  //
-  //    var notes = List<ApiJson>();
-  //
-  //    if(response.statusCode == 200){
-  //      var apiData = response.body;
-  //      var localData = jsonDecode(apiData);
-  //      for(var data in localData){
-  //        apiListData.add(ApiJson.fromJson(data));
-  //      }
-  //    }
-  //    return apiListData;
-  //  }
-
   @override
   void initState() {
     print('Init State');
     getData();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +61,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             Padding(
               padding: EdgeInsets.all(20.0),
               child: TextField(
-                onTap: (){
+                onTap: () {
                   setState(() {
                     print('tapped');
                   });
@@ -118,8 +97,9 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 child: Padding(
                     padding: const EdgeInsets.only(
                         top: 25.0, left: 20, right: 25, bottom: 25),
-                    child: cardList.isNotEmpty ? ListView(children: cardList): Text('data Is Loading')
-                ),
+                    child: cardList.isNotEmpty
+                        ? ListView(children: cardList)
+                        : Text('data Is Loading')),
               ),
             ),
           ],
@@ -128,7 +108,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
     );
   }
 }
-
 
 final name = '2023-04-15T05:57:47.157Z"';
 
@@ -139,85 +118,95 @@ class MyCard extends StatelessWidget {
   String? type;
   String? description;
   String? id;
+  Function()? onTap;
 
-  MyCard({required this.date,
-    required this.amount,
-    this.currency,
-    required this.type,
-    this.description,
-    this.id});
+  MyCard(
+      {required this.date,
+      required this.amount,
+      this.currency,
+      required this.type,
+      this.description,
+      this.id,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            //Transparent Red Container
-            Container(
-              height: 50,
-              width: 50,
-              decoration: BoxDecoration(
-                color: type == 'payment' ? Color(0xFFFBD5D5): Color(0xFFBFE9C8),
-                borderRadius: BorderRadius.all(Radius.circular(15)),
+        GestureDetector(
+          onTap: onTap,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              //Transparent Red Container
+              Container(
+                height: 50,
+                width: 50,
+                decoration: BoxDecoration(
+                  color:
+                      type == 'payment' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                //Dollar Sign Container
+                child: Center(
+                  child: Container(
+                      height: 35,
+                      width: 35,
+                      decoration: BoxDecoration(
+                          color: type == 'payment' ? Colors.red : Colors.green,
+                          borderRadius: BorderRadius.all(Radius.circular(30.0))),
+                      child: Icon(
+                        Icons.attach_money,
+                        size: 25,
+                        color: Colors.white70,
+                      )),
+                ),
               ),
-              //Dollar Sign Container
-              child: Center(
-                child: Container(
-                    height: 35,
-                    width: 35,
-                    decoration: BoxDecoration(
-                        color: type == 'payment' ? Colors.red: Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(30.0))),
-                    child: Icon(
-                      Icons.attach_money,
-                      size: 25,
-                      color: Colors.white70,
-                    )),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$type',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    date!.length > 10 ? date!.substring(0, 10) : date!,
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color: Colors.black38,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '$type',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
+              SizedBox(
+                width: 100,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Text(
+                    type == 'payment' ? '-\$$amount': '+\$$amount',
+                    style: TextStyle(
+                      fontSize: 15.0,
+                      color:
+                          type == 'payment' ? Colors.red.shade500 : Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                Text(
-                  date!.length > 10 ? date!.substring(0, 10) : date!,
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: Colors.black38,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              width: 110,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '$amount',
-                  style: TextStyle(
-                    fontSize: 15.0,
-                    color: type == 'payment' ? Colors.red.shade500: Colors.green,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Icon(
-                  type == 'payment' ? Icons.arrow_circle_up: Icons.arrow_circle_down,
-                  color: type == 'payment' ? Colors.red: Colors.green,
-                )
-              ],
-            ),
-          ],
+                  Icon(
+                    type == 'payment'
+                        ? Icons.arrow_circle_up
+                        : Icons.arrow_circle_down,
+                    color: type == 'payment' ? Colors.red : Colors.green,
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         Divider()
       ],
