@@ -15,9 +15,7 @@ class TransactionHistory extends StatefulWidget {
 }
 
 class _TransactionHistoryState extends State<TransactionHistory> {
-
   var isDataLoading = true;
-
 
   //Transaction Provider Object.
   TransactionProvider transactionServiceProvider = TransactionProvider();
@@ -30,7 +28,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
   //Receiving data from API.
   void getData() async {
-
     transactionsList = await transactionServiceProvider.fetchTransactions();
 
     isDataLoading = false;
@@ -48,39 +45,43 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   }
 
   //Implenting Search Functionality.
-  void runFilter(String enteredKeyword){
-
+  void runFilter(String enteredKeyword) {
     //Creating List For Searched Items.
     List<TransactionModal> searchResult = [];
 
-    if(enteredKeyword.isEmpty){
+    if (enteredKeyword.isEmpty) {
       setState(() {
         searchResult = transactionsList;
       });
-
-    }else{
+    } else {
       //Items can be searched by using specific id given to every item in the List.
-      searchResult = transactionsList.where((element) => element.amount!.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+      searchResult = transactionsList
+          .where((element) => element.amount!
+              .toLowerCase()
+              .contains(enteredKeyword.toLowerCase()))
+          .toList();
     }
     //Showing searched items on the Screen
     setState(() => foundItems = searchResult);
   }
+
   //The Screen Starts Here.
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kPrimaryBackgroundColor,
       appBar: AppBar(
         title: const Text('Transaction History'),
         centerTitle: true,
-        backgroundColor:kPrimaryBackgroundColor,
+        backgroundColor: kPrimaryBackgroundColor,
       ),
       body: SafeArea(
         child: Column(
           children: [
             //Search bar to search through Transaction list.
             MyTextField(
-              onChanged: (value){
+              onChanged: (value) {
                 runFilter(value);
               },
             ),
@@ -95,35 +96,43 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                         topRight: Radius.circular(40.0),
                         topLeft: Radius.circular(40.0))),
                 child: Padding(
-                    padding: const EdgeInsets.all(25),
-                    //Populating the screen with Transaction items.
-                    child: isDataLoading ? LoadingCircle():foundItems.isNotEmpty
-                        ? ListView.builder(
-                        itemCount: foundItems.length,
-                        itemBuilder: (context, index){
+                  padding: const EdgeInsets.all(25),
+                  //Populating the screen with Transaction items.
+                  child: isDataLoading
+                      ? LoadingCircle()
+                      : foundItems.isNotEmpty
+                          ? ListView.builder(
+                              itemCount: foundItems.length,
+                              itemBuilder: (context, index) {
+                                TransactionModal transaction =
+                                    foundItems[index];
 
-                          TransactionModal transaction = foundItems[index];
+                                final f = DateFormat('dd-MMM-yyyy');
 
-                          final f = DateFormat('dd-MMM-yyyy');
-
-                          return MyCard(
-                              date: f.format(transaction.date),
-                              amount: transaction.amount,
-                              type: transaction.type,
-                              onTap: () {
-
-                                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                  return TransactionDetails(
+                                return MyCard(
                                     date: f.format(transaction.date),
                                     amount: transaction.amount,
                                     type: transaction.type,
-                                    currency: transaction.currency,
-                                    description: transaction.description,);
-                                }));}
-                          );
-
-                    })
-                        : Center(child: Text('No Data Found',style: TextStyle(fontSize: 20),),),),
+                                    onTap: () {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return TransactionDetails(
+                                          date: f.format(transaction.date),
+                                          amount: transaction.amount,
+                                          type: transaction.type,
+                                          currency: transaction.currency,
+                                          description: transaction.description,
+                                        );
+                                      }));
+                                    });
+                              })
+                          : Center(
+                              child: Text(
+                                'No Data Found',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                ),
               ),
             ),
           ],
@@ -132,4 +141,3 @@ class _TransactionHistoryState extends State<TransactionHistory> {
     );
   }
 }
-
