@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4a2c39b1-74f3-4897-b147-f6574ecd8c49" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Global Widgets/global_widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Global Widgets/global_widgets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +101,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="Dart">
           <url>file://$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart</url>
-          <line>115</line>
+          <line>119</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
