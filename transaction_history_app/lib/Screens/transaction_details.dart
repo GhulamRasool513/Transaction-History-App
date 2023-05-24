@@ -38,7 +38,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
               height: 150,
               width: 500,
               decoration: BoxDecoration(
-                color: widget.type == 'payment' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
+                color: widget.type == 'payment' || widget.type == 'withdrawal' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
                 borderRadius: BorderRadius.all(Radius.circular(40)),
               ),
               //Dollar Sign Container
@@ -47,7 +47,7 @@ class _TransactionDetailsState extends State<TransactionDetails> {
                     height: 55,
                     width: 55,
                     decoration: BoxDecoration(
-                        color: widget.type == 'payment' ? Colors.red : Colors.green,
+                        color: widget.type == 'payment' || widget.type == 'withdrawal' ? Colors.red : Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(30.0))),
                     child: Icon(
                       Icons.attach_money,
@@ -122,8 +122,8 @@ class Details extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text('Amount: ', style: TextStyle(fontSize: 20,),),
-            Text(type == 'payment'? '-\$$amount': '+\$$amount',
-              style: TextStyle(fontSize: 18, color: type == 'payment'?  Colors.red:Colors.green),),
+            Text(type == 'payment' || type == 'withdrawal'? '-\$$amount': '+\$$amount',
+              style: TextStyle(fontSize: 18, color: type == 'payment' || type == 'withdrawal'?  Colors.red:Colors.green),),
           ],
         ),
         Divider(thickness: 1,),

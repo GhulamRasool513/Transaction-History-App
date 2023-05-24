@@ -13,7 +13,11 @@ class TransactionHistory extends StatefulWidget {
 }
 
 class _TransactionHistoryState extends State<TransactionHistory> {
-  static List<MyCard> cardList = [];
+  List<MyCard> transactionList = [];
+
+  List<MyCard> foundItems = [];
+
+
 
   void getData() async {
     String url =
@@ -30,7 +34,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
       String description = data['description'];
       String id = data['id'];
 
-      cardList.add(MyCard(
+      transactionList.add(MyCard(
         date: date,
         amount: amount,
         type: type,
@@ -51,8 +55,22 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
   @override
   void initState() {
-    print('Init State');
     getData();
+    foundItems = transactionList;
+  }
+
+  void runFilter(String enteredKeyword){
+    List<MyCard> searchResult = [];
+    if(enteredKeyword == null){
+      searchResult = transactionList;
+      print('positive');
+    }else{
+      print('else');
+      searchResult = transactionList.where((element) => element.type!.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
+    }
+    setState(() {
+      foundItems = searchResult;
+    });
   }
 
   @override
@@ -71,10 +89,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             Padding(
               padding: EdgeInsets.all(20.0),
               child: TextField(
-                onTap: () {
-                  setState(() {
-                    print('tapped');
-                  });
+                onChanged: (value) {
+                  runFilter(value);
                 },
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(20.0),
@@ -107,8 +123,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 child: Padding(
                     padding: const EdgeInsets.only(
                         top: 25.0, left: 20, right: 25, bottom: 25),
-                    child: cardList.isNotEmpty
-                        ? ListView(children: cardList)
+                    child: foundItems.isNotEmpty
+                        ? ListView(children: foundItems)
                         : SpinKitCircle(
                       duration: Duration(seconds: 2),
                       size: 70.0,
@@ -158,7 +174,7 @@ class MyCard extends StatelessWidget {
                 width: 50,
                 decoration: BoxDecoration(
                   color:
-                      type == 'payment' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
+                      type == 'payment' || type == 'withdrawal' ? Color(0xFFFBD5D5) : Color(0xFFBFE9C8),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),
                 //Dollar Sign Container
@@ -167,7 +183,7 @@ class MyCard extends StatelessWidget {
                       height: 35,
                       width: 35,
                       decoration: BoxDecoration(
-                          color: type == 'payment' ? Colors.red : Colors.green,
+                          color: type == 'payment' || type == 'withdrawal' ? Colors.red : Colors.green,
                           borderRadius:
                               BorderRadius.all(Radius.circular(30.0))),
                       child: Icon(
@@ -204,10 +220,10 @@ class MyCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    type == 'payment' ? '-\$$amount' : '+\$$amount',
+                    type == 'payment' || type == 'withdrawal' ? '-\$$amount' : '+\$$amount',
                     style: TextStyle(
                       fontSize: 15.0,
-                      color: type == 'payment'
+                      color: type == 'payment' || type == 'withdrawal'
                           ? Colors.red.shade500
                           : Colors.green,
                       fontWeight: FontWeight.bold,
@@ -220,10 +236,10 @@ class MyCard extends StatelessWidget {
                         width: 7,
                       ),
                       Icon(
-                        type == 'payment'
+                        type == 'payment' || type == 'withdrawal'
                             ? Icons.arrow_circle_up
                             : Icons.arrow_circle_down,
-                        color: type == 'payment' ? Colors.red : Colors.green,
+                        color: type == 'payment' || type == 'withdrawal' ? Colors.red : Colors.green,
                       ),
                     ],
                   )
