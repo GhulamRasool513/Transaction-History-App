@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../constants.dart';
+
 //Widgets Of Transaction History Screen.
 
 
@@ -46,7 +48,7 @@ class Details extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text('Amount: ', style: TextStyle(fontSize: 20,),),
-            Text(type == 'payment' || type == 'withdrawal'? '-\$$amount': '+\$$amount',
+            Text(type == 'payment' || type == 'withdrawal'? '-$kCurrency' + '$amount': '+$kCurrency' + '$amount',
               style: TextStyle(fontSize: 18, color: type == 'payment' || type == 'withdrawal'?  Colors.red:Colors.green),),
           ],
         ),
@@ -55,7 +57,7 @@ class Details extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             const Text('Date', style: TextStyle(fontSize: 20,),),
-            Text(date!.length > 10 ? date!.substring(0, 10) : date!, style: const TextStyle(fontSize: 18,)),
+            Text(date!.length > 15 ? date!.substring(0, 15) : date!, style: const TextStyle(fontSize: 18,)),
           ],
         ),
         const Divider(thickness: 1,),

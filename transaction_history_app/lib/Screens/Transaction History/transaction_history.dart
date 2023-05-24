@@ -1,16 +1,10 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:transaction_history_app/Modal/transaction_modal.dart';
 import 'package:transaction_history_app/Provider/transaction_provider.dart';
 import 'package:transaction_history_app/Screens/Transaction%20Details/transaction_details.dart';
 import 'package:transaction_history_app/Screens/Transaction%20History/widgets.dart';
 import 'package:transaction_history_app/constants.dart';
-import '../../Global Widgets/global_widgets.dart';
 import 'package:intl/intl.dart';
-
-import '../Transaction Details/widgets.dart';
-
 
 class TransactionHistory extends StatefulWidget {
   const TransactionHistory({super.key});
@@ -59,7 +53,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
     if(enteredKeyword.isEmpty){
       setState(() {
-        foundItems = transactionsList;
+        searchResult = transactionsList;
       });
       print('true');
 
@@ -95,6 +89,8 @@ class _TransactionHistoryState extends State<TransactionHistory> {
             //Upper White Container Body
             Expanded(
               child: Container(
+                height: double.infinity,
+                width: double.infinity,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -121,7 +117,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                                   return TransactionDetails(
-                                    date: transaction.amount,
+                                    date: f.format(transaction.date),
                                     amount: transaction.amount,
                                     type: transaction.type,
                                     currency: transaction.currency,
@@ -130,7 +126,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                           );
 
                     })
-                        : LoadingScreen(),),
+                        : Text('No Data Found'),),
               ),
             ),
           ],

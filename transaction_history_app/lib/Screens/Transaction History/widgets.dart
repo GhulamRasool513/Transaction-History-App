@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_history_app/constants.dart';
 
 //Widgets Of Transaction History Screen.
 
@@ -110,13 +111,13 @@ class MyCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                width: 100,
+                width: 90,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    type == 'payment' || type == 'withdrawal' ? '-\$$amount' : '+\$$amount',
+                    type == 'payment' || type == 'withdrawal' ? '-$kCurrency' + '$amount' : '+$kCurrency' + '$amount',
                     style: TextStyle(
                       fontSize: 15.0,
                       color: type == 'payment' || type == 'withdrawal'
