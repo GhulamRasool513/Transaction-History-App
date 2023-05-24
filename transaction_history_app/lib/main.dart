@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'Screens/transaction_history.dart';
-import 'Screens/transaction_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -8,7 +7,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  //This is the root of our app.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
