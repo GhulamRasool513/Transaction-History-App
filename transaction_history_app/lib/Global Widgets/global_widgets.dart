@@ -4,10 +4,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 //Loading Circle
-class LoadingScreen extends StatelessWidget {
-  const LoadingScreen({
-    super.key,
-  });
+class LoadingCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {

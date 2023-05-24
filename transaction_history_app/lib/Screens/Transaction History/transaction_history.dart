@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:transaction_history_app/Global%20Widgets/global_widgets.dart';
 import 'package:transaction_history_app/Modal/transaction_modal.dart';
 import 'package:transaction_history_app/Provider/transaction_provider.dart';
 import 'package:transaction_history_app/Screens/Transaction%20Details/transaction_details.dart';
@@ -15,6 +16,8 @@ class TransactionHistory extends StatefulWidget {
 
 class _TransactionHistoryState extends State<TransactionHistory> {
 
+  var isDataLoading = true;
+
 
   //Transaction Provider Object.
   TransactionProvider transactionServiceProvider = TransactionProvider();
@@ -30,6 +33,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
 
     transactionsList = await transactionServiceProvider.fetchTransactions();
 
+    isDataLoading = false;
     //Maintaining changes on the Screen.
     setState(() {
       foundItems = transactionsList;
@@ -93,7 +97,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                 child: Padding(
                     padding: const EdgeInsets.all(25),
                     //Populating the screen with Transaction items.
-                    child: foundItems.isNotEmpty
+                    child: isDataLoading ? LoadingCircle():foundItems.isNotEmpty
                         ? ListView.builder(
                         itemCount: foundItems.length,
                         itemBuilder: (context, index){
@@ -119,7 +123,7 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                           );
 
                     })
-                        : Text('No Data Found'),),
+                        : Center(child: Text('No Data Found',style: TextStyle(fontSize: 20),),),),
               ),
             ),
           ],

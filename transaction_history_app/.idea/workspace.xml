@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4a2c39b1-74f3-4897-b147-f6574ecd8c49" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/test/transaction_test.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Modal/transaction_modal.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Modal/transaction_modal.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Provider/transaction_provider.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Provider/transaction_provider.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Transaction Details/transaction_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Transaction Details/transaction_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Transaction Details/widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Transaction Details/widgets.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/Global Widgets/global_widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Global Widgets/global_widgets.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/Screens/Transaction History/widgets.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/Screens/Transaction History/widgets.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/widget_test.dart" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,5 +97,16 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="Dart">
+          <url>file://$PROJECT_DIR$/lib/Screens/Transaction History/transaction_history.dart</url>
+          <line>115</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
