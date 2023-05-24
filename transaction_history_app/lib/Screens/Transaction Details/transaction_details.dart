@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:transaction_history_app/Screens/Transaction%20Details/widgets.dart';
 import 'package:transaction_history_app/constants.dart';
-import '../../Global Widgets/global_widgets.dart';
 
 
 class TransactionDetails extends StatelessWidget {
@@ -31,7 +30,6 @@ class TransactionDetails extends StatelessWidget {
         centerTitle: true,
         backgroundColor: kPrimaryBackgroundColor,
       ),
-
       body: SafeArea(
         child: Column(
           children: [
@@ -60,7 +58,6 @@ class TransactionDetails extends StatelessWidget {
             SizedBox(
               height: 15,
             ),
-
             //White Body Container
             Expanded(
               child: Container(

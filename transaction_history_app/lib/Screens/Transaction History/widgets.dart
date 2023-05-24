@@ -43,14 +43,12 @@ class MyCard extends StatelessWidget {
   final String date;
   final String amount;
   final String type;
-  final String id;
   final Function()? onTap;
 
   MyCard(
       {required this.date,
         required this.amount,
         required this.type,
-        required this.id,
         this.onTap});
 
   @override
@@ -126,19 +124,11 @@ class MyCard extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text('id-$id',style: const TextStyle( color: Colors.black38,),),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Icon(
-                        type == 'payment' || type == 'withdrawal'
-                            ? Icons.arrow_circle_up
-                            : Icons.arrow_circle_down,
-                        color: type == 'payment' || type == 'withdrawal' ? Colors.red : Colors.green,
-                      ),
-                    ],
+                  Icon(
+                    type == 'payment' || type == 'withdrawal'
+                        ? Icons.arrow_circle_up
+                        : Icons.arrow_circle_down,
+                    color: type == 'payment' || type == 'withdrawal' ? Colors.red : Colors.green,
                   )
                 ],
               ),

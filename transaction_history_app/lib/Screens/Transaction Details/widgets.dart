@@ -2,13 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-//Widgets Of Transaction History Screen.
-
-
-
-
-//Widgets OF Transaction Detials Screen.
-
 //Class Of Details Of Details Screen
 class Details extends StatelessWidget {
   final String type;

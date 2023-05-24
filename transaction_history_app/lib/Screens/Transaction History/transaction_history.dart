@@ -15,13 +15,14 @@ class TransactionHistory extends StatefulWidget {
 
 class _TransactionHistoryState extends State<TransactionHistory> {
 
-  //API items List
 
-  //List that is used to show items on screen
-
+  //Transaction Provider Object.
   TransactionProvider transactionServiceProvider = TransactionProvider();
 
+  //API Data List.
   List<TransactionModal> transactionsList = [];
+
+  //List To Show Items On The Screen.
   List<TransactionModal> foundItems = [];
 
   //Receiving data from API.
@@ -39,9 +40,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
   void initState() {
     //calling this method to receive data from API.
     getData();
-    //setting the List to show items on Screen.
-
-
     super.initState();
   }
 
@@ -55,18 +53,14 @@ class _TransactionHistoryState extends State<TransactionHistory> {
       setState(() {
         searchResult = transactionsList;
       });
-      print('true');
 
     }else{
-      print('else');
-      //Items can be searched using id given to every item in the List.
-      searchResult = transactionsList.where((element) => element.id!.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
-
+      //Items can be searched by using specific id given to every item in the List.
+      searchResult = transactionsList.where((element) => element.amount!.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();
     }
     //Showing searched items on the Screen
     setState(() => foundItems = searchResult);
   }
-
   //The Screen Starts Here.
   @override
   Widget build(BuildContext context) {
@@ -112,7 +106,6 @@ class _TransactionHistoryState extends State<TransactionHistory> {
                               date: f.format(transaction.date),
                               amount: transaction.amount,
                               type: transaction.type,
-                              id: transaction.id,
                               onTap: () {
 
                                 Navigator.push(context, MaterialPageRoute(builder: (context) {
